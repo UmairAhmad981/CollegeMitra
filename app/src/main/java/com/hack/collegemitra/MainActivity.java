@@ -1,6 +1,7 @@
 package com.hack.collegemitra;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.hack.collegemitra.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
+    String Title_toolbar="Home";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +30,16 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             if(item.getItemId()==R.id.home){
+                Title_toolbar="Home";
+                TextView tx=findViewById(R.id.toolbar_text);
+                tx.setText(Title_toolbar);
                 replaceFragment(new HomeFragment());
+
             }
             else if(item.getItemId()==R.id.profile){
-
+                Title_toolbar="Profile";
+                TextView tx=findViewById(R.id.toolbar_text);
+                tx.setText(Title_toolbar);
                 replaceFragment(new ProfileFragment());
             }
             return true;
