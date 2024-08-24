@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,6 +87,10 @@ public class HomeFragment extends Fragment implements SubjectListener{
     public void onSubjectClicked(int position) {
         String str = Courses.get(position).getCourse();
 
+        String Title_toolbar=str;
+        TextView tx= requireActivity().findViewById(R.id.toolbar_text);
+        tx.setText(Title_toolbar);
+
         // Use getActivity() if FrameLay is in the activity's layout
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -98,6 +104,19 @@ public class HomeFragment extends Fragment implements SubjectListener{
         fragmentTransaction.commit();
 
         Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Use getActivity() to access the parent activity
+        if (getActivity() != null) {
+            // Find the TextView in the activity and set the title
+            TextView tx = getActivity().findViewById(R.id.toolbar_text);
+            if (tx != null) {
+                tx.setText("Home");
+            }
+        }
     }
 
 
