@@ -2,7 +2,6 @@ package com.hack.collegemitra;
 
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +52,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.FrameLay,fragment);
         fragmentTransaction.commit();
     }
-
-
 }
