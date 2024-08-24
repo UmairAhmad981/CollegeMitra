@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -71,6 +73,7 @@ public class HomeFragment extends Fragment implements SubjectListener{
     }
 
     private void setCourses() {
+        Courses.clear();
         String[] AllCourses = getResources().getStringArray(R.array.Courses_Name);
 
         for (String course : AllCourses) {
@@ -82,6 +85,20 @@ public class HomeFragment extends Fragment implements SubjectListener{
     public void onSubjectClicked(int position) {
         String str = Courses.get(position).getCourse();
 
+        // Use getActivity() if FrameLay is in the activity's layout
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Make sure BatchFragment is initialized correctly
+        BatchFragment batchFragment = new BatchFragment();
+
+        // Replace the fragment in the activity's container
+        fragmentTransaction.replace(R.id.FrameLay, batchFragment);
+        fragmentTransaction.addToBackStack(null); // Optional: add this transaction to the back stack
+        fragmentTransaction.commit();
+
         Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
     }
+
+
 }

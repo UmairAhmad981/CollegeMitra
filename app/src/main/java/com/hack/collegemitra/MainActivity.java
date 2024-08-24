@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
                 TextView tx=findViewById(R.id.toolbar_text);
                 tx.setText(Title_toolbar);
                 replaceFragment(new HomeFragment());
-
             }
             else if(item.getItemId()==R.id.profile){
                 Title_toolbar="Profile";
@@ -47,12 +46,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void replaceFragment(Fragment fragment){
+    public void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.FrameLay,fragment);
         fragmentTransaction.commit();
     }
-
-
 }

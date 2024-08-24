@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">College Mitra</string>
     <string-array name="Courses_Name">
-    <item>Computer Science</item>
-    <item>Chemistry</item>
-    <item>Physics</item>
-    <item>Maths</item>
-</string-array>
+        <item>Computer Science</item>
+        <item>Chemistry</item>
+        <item>Physics</item>
+        <item>Maths</item>
+    </string-array>
+    <string-array name="Batch_Wise">
+        <item>20–22</item>
+        <item>21–22</item>
+        <item>20–23</item>
+        <item>20–24</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
