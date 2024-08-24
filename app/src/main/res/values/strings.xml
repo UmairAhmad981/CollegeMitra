@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">College Mitra</string>
+    <string-array name="Courses_Name">
+    <item>Computer Science</item>
+    <item>Chemistry</item>
+    <item>Physics</item>
+    <item>Maths</item>
+</string-array>
+</resources>
