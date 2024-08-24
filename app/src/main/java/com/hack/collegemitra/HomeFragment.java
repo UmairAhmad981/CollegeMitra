@@ -1,5 +1,6 @@
 package com.hack.collegemitra;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,7 @@ import java.util.ArrayList;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SubjectListener{
 
     ArrayList<com.hack.studentapp.course_card> Courses = new ArrayList<>();
     private static final String ARG_PARAM1 = "param1";
@@ -59,7 +61,8 @@ public class HomeFragment extends Fragment {
 
         setCourses();
         // Use getContext() to pass the context to the adapter
-        com.hack.studentapp.Course_RVAdapter adapter = new com.hack.studentapp.Course_RVAdapter(getContext(), Courses);
+        com.hack.studentapp.Course_RVAdapter adapter = new com.hack.studentapp.Course_RVAdapter(getContext(), Courses, this);
+
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));  // Use getContext() here
@@ -73,5 +76,12 @@ public class HomeFragment extends Fragment {
         for (String course : AllCourses) {
             Courses.add(new com.hack.studentapp.course_card(course));
         }
+    }
+
+    @Override
+    public void onSubjectClicked(int position) {
+        String str = Courses.get(position).getCourse();
+
+        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
     }
 }
