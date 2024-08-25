@@ -103,7 +103,6 @@ public class HomeFragment extends Fragment implements SubjectListener{
         fragmentTransaction.addToBackStack(null); // Optional: add this transaction to the back stack
         fragmentTransaction.commit();
 
-        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onResume() {
