@@ -1,5 +1,8 @@
 package com.hack.collegemitra;
 
+import static android.view.View.VISIBLE;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +10,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,13 +28,19 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+    FirebaseAuth auth;
+    FirebaseUser user;
+    ProgressBar pb;
+    private String st;
+    private DocumentReference userdata;
+    ScrollView sc;
+    // Declare TextViews
+    private TextView name, about, username, gender, age, dob, mob, email;
+    Button logout;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -28,15 +48,6 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -58,7 +69,90 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // Initialize ProgressBar
+        pb = rootView.findViewById(R.id.progressBar4);
+        logout=rootView.findViewById(R.id.Logoutbtn);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+
+                // Start the Login activity and close the current one
+                Intent intent = new Intent(getActivity(), LoginPage.class);
+                startActivity(intent);
+
+                // Optionally, close the current activity if necessary
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
+            }
+        });
+        // Initialize Firebase components
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        if (user != null) {
+            st = "email/" + user.getEmail();
+        }
+
+        userdata = FirebaseFirestore.getInstance().document(st);
+
+        // Initialize TextViews
+        name = rootView.findViewById(R.id.name);
+        about = rootView.findViewById(R.id.about);
+        username = rootView.findViewById(R.id.username);
+        gender = rootView.findViewById(R.id.gender);
+        age = rootView.findViewById(R.id.age);
+        dob = rootView.findViewById(R.id.dob);
+        mob = rootView.findViewById(R.id.mob);
+        email = rootView.findViewById(R.id.email);
+
+        // Load user data
+        loadUserProfile();
+
+        return rootView;
+    }
+
+    private void loadUserProfile() {
+        // Show progress bar while loading data
+        pb.setVisibility(VISIBLE);
+
+        userdata.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                // Hide progress bar after data is loaded
+                pb.setVisibility(View.GONE);
+
+                if (documentSnapshot.exists()) {
+                    name.setText(documentSnapshot.getString("name"));
+                    about.setText(documentSnapshot.getString("about"));
+                    username.setText(documentSnapshot.getString("username"));
+                    gender.setText(documentSnapshot.getString("gender"));
+                    age.setText(documentSnapshot.getString("age"));
+                    dob.setText(documentSnapshot.getString("dob"));
+                    mob.setText(documentSnapshot.getString("mob"));
+                    email.setText(documentSnapshot.getString("email"));
+                }
+            }
+        }).addOnFailureListener(e -> {
+            // Hide progress bar on failure
+            pb.setVisibility(View.GONE);
+        });
+
+
+    }
+
+    public String getmParam1() {
+        return mParam1;
+    }
+
+    public String getmParam2() {
+        return mParam2;
     }
 }
