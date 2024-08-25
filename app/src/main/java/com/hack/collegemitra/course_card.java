@@ -1,4 +1,4 @@
-package com.hack.studentapp;
+package com.hack.collegemitra;
 
 public class course_card {
     String course;

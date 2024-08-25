@@ -1,4 +1,4 @@
-package com.hack.studentapp;
+package com.hack.collegemitra;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class Course_RVAdapter extends RecyclerView.Adapter<Course_RVAdapter.MyViewHolder> {
     private final SubjectListener subjectListener;
-    private Context context;
-    private ArrayList<com.hack.studentapp.course_card> Cour;
+    private final Context context;
+    private final ArrayList<course_card> Cour;
 
-    public Course_RVAdapter(Context context, ArrayList<com.hack.studentapp.course_card> Cour, SubjectListener subjectListener) {
+    public Course_RVAdapter(Context context, ArrayList<course_card> Cour, SubjectListener subjectListener) {
         this.context = context;
         this.Cour = Cour;
         this.subjectListener = subjectListener;
@@ -28,8 +28,7 @@ public class Course_RVAdapter extends RecyclerView.Adapter<Course_RVAdapter.MyVi
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        // Make sure this XML file has a CardView as its root element
+        LayoutInflater inflater = LayoutInflater.from(context);  // Use 'context' here
         View view = inflater.inflate(R.layout.card, parent, false);
         return new MyViewHolder(view, subjectListener);
     }
@@ -45,11 +44,10 @@ public class Course_RVAdapter extends RecyclerView.Adapter<Course_RVAdapter.MyVi
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView Courses_c;
+        final TextView Courses_c;
 
         public MyViewHolder(@NonNull View itemView, SubjectListener subjectListener) {
             super(itemView);
-            // Ensure this ID matches the ID of the TextView in the XML layout
             Courses_c = itemView.findViewById(R.id.cor);
             itemView.findViewById(R.id.card_view).setOnClickListener(new View.OnClickListener() {
                 @Override

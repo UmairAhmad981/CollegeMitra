@@ -25,7 +25,7 @@ import java.util.Objects;
  */
 public class HomeFragment extends Fragment implements SubjectListener{
 
-    ArrayList<com.hack.studentapp.course_card> Courses = new ArrayList<>();
+    ArrayList<course_card> Courses = new ArrayList<>();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment implements SubjectListener{
 
         setCourses();
         // Use getContext() to pass the context to the adapter
-        com.hack.studentapp.Course_RVAdapter adapter = new com.hack.studentapp.Course_RVAdapter(getContext(), Courses, this);
+        Course_RVAdapter adapter = new Course_RVAdapter(getContext(), Courses, this);
 
 
         recyclerView.setAdapter(adapter);
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment implements SubjectListener{
         String[] AllCourses = getResources().getStringArray(R.array.Courses_Name);
 
         for (String course : AllCourses) {
-            Courses.add(new com.hack.studentapp.course_card(course));
+            Courses.add(new course_card(course));
         }
     }
 
